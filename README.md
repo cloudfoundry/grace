@@ -1,7 +1,7 @@
 # Grace - a simple Go webapp for testing cloudfoundry
 
 ```
-go get -v github.com/onsi/grace
+go get -v github.com/cloudfoundry/grace
 goto grace
 ```
 
@@ -15,11 +15,10 @@ cf start $APP_NAME
 ```
 
 Dockerimage:
-onsi/grace (based on ubuntu)
-onsi/grace-busybox (based on busy-box)
+cfdiegodocker/grace (based on busy-box)
 
 To rebuild the dockerimage:
 ```bash
-docker build -t="onsi/grace-busybox" .
-docker push onsi/grace-busybox
+docker build -t="cfdiegodocker/grace" .
+docker push cfdiegodocker/grace
 ```

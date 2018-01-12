@@ -1,0 +1,19 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: cloudfoundry/golang-ci
+
+inputs:
+  - name: git-cloudfoundry-grace
+
+params:
+  GO_SRC_DIR: ~
+
+outputs:
+  - name: grace-docker
+  - name: grace-tarball
+
+run:
+  path: git-cloudfoundry-grace/ci/build_grace_binary

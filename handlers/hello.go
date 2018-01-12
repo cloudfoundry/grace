@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/onsi/grace/helpers"
+	"github.com/cloudfoundry/grace/helpers"
 )
 
 type Hello struct {

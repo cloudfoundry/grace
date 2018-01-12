@@ -4,7 +4,7 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/onsi/grace/handlers/experiments"
+	"github.com/cloudfoundry/grace/handlers/experiments"
 )
 
 type ListExperiments struct {

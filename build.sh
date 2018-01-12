@@ -16,7 +16,7 @@ rm grace.tar.gz
 echo "Compiling for busybox..."
 GOOS=linux GOARCH=amd64 go build -tags "busybox" .
 echo "Constructing Dockerimage"
-docker build -t="onsi/grace-busybox" .
-docker push onsi/grace-busybox
+docker build -t="cfdiegodocker/grace" .
+docker push cfdiegodocker/grace
 echo "Cleaning up..."
 rm grace

@@ -11,10 +11,10 @@ import (
 
 	_ "net/http/pprof"
 
-	"github.com/onsi/grace/handlers"
-	"github.com/onsi/grace/helpers"
-	"github.com/onsi/grace/routes"
-	"github.com/pivotal-golang/lager"
+	"code.cloudfoundry.org/lager"
+	"github.com/cloudfoundry/grace/handlers"
+	"github.com/cloudfoundry/grace/helpers"
+	"github.com/cloudfoundry/grace/routes"
 	"github.com/tedsuo/ifrit"
 	"github.com/tedsuo/ifrit/grouper"
 	"github.com/tedsuo/ifrit/http_server"

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -ex
+
+export HOME_DIR=$PWD
+
+mkdir -p $HOME_DIR/$GO_SRC_DIR
+cp -r git-cloudfoundry-grace/* $HOME_DIR/$GO_SRC_DIR
+
+pushd $GO_SRC_DIR
+  GOPATH=$HOME_DIR go build -tags 'busybox' .
+  tar -czf grace.tar.gz grace
+  mv grace.tar.gz $HOME_DIR/grace-tarball
+  cp -r . $HOME_DIR/grace-docker
+popd
