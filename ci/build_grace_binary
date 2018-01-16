@@ -14,7 +14,6 @@ pushd $GO_SRC_DIR
 
   # build grace for the busybox docker image
   GOPATH=$HOME_DIR go build -tags 'busybox' .
-  tar -czf grace.tar.gz grace
-  mv grace.tar.gz $HOME_DIR/grace-docker
+  mv grace $HOME_DIR/grace-docker
   cp Dockerfile $HOME_DIR/grace-docker
 popd
