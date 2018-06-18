@@ -31,6 +31,7 @@ func New(logger lager.Logger) rata.Handlers {
 		routes.ListFUSEFS:       &ListFUSEFS{},
 		routes.IncrementCounter: &IncrementCounter{&sharedCounter},
 		routes.ReadCounter:      &ReadCounter{&sharedCounter},
+		routes.Sleep:            &sleep{},
 	}
 
 	for route, handler := range handlers {
