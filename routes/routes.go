@@ -21,7 +21,11 @@ const (
 	ReadCounter      = "READ_COUNTER"
 	MountFUSEFS      = "MOUNT_FUSE_FS"
 	ListFUSEFS       = "LIST_FUSE_FS"
+<<<<<<< HEAD
 	Sleep            = "SLEEP"
+=======
+	TimeStream       = "TIMESTREAM"
+>>>>>>> WIP
 )
 
 var Routes = rata.Routes{
@@ -41,6 +45,7 @@ var Routes = rata.Routes{
 	{Path: "/unstick", Method: "GET", Name: Unstick},
 	{Path: "/counter", Method: "POST", Name: IncrementCounter},
 	{Path: "/counter", Method: "GET", Name: ReadCounter},
+	{Path: "/time-stream", Method: "GET", Name: TimeStream},
 	{Path: "/fuse-fs/mount", Method: "POST", Name: MountFUSEFS},
 	{Path: "/fuse-fs/ls", Method: "GET", Name: ListFUSEFS},
 	{Path: "/sleep/:duration", Method: "GET", Name: Sleep},
