@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -108,14 +109,19 @@ func main() {
 	}
 
 	addr := ":" + port
-	secondary := ":9999"
+	portNum, err := strconv.Atoi(port)
+	if err != nil {
+		logger.Fatal("couldn't convert port to number", err)
+	}
+	secondaryPort := portNum + 1
+	secondary := fmt.Sprintf(":%d", secondaryPort)
 	if attachToHostname {
 		hostname, err := os.Hostname()
 		if err != nil {
 			logger.Fatal("couldn't get hostname", err)
 		}
 		addr = hostname + ":" + port
-		secondary = hostname + ":9999"
+		secondary = fmt.Sprintf("%s:%d", hostname, secondaryPort)
 	}
 	fmt.Printf("Grace is listening on %s\n", addr)
 
@@ -130,8 +136,9 @@ func main() {
 
 	go func() {
 		//debug server
-		logger.Info("debug.server.starting", lager.Data{"port": 6060})
-		err := http.ListenAndServe("localhost:6060", nil)
+		debugPort := portNum + 2
+		logger.Info("debug.server.starting", lager.Data{"port": debugPort})
+		err := http.ListenAndServe(fmt.Sprintf("localhost:%d", debugPort), nil)
 		if err != nil {
 			logger.Error("debug.server.failed", err)
 		}
