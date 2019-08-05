@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"strconv"
 	"syscall"
 	"time"
 
@@ -109,12 +108,11 @@ func main() {
 	}
 
 	addr := ":" + port
-	portNum, err := strconv.Atoi(port)
-	if err != nil {
-		logger.Fatal("couldn't convert port to number", err)
+	secondaryPort := "9999"
+	if sp := os.Getenv("SECONDARY_PORT"); sp != "" {
+		secondaryPort = sp
 	}
-	secondaryPort := portNum + 1
-	secondary := fmt.Sprintf(":%d", secondaryPort)
+	secondary := ":" + secondaryPort
 	if attachToHostname {
 		hostname, err := os.Hostname()
 		if err != nil {
@@ -136,9 +134,12 @@ func main() {
 
 	go func() {
 		//debug server
-		debugPort := portNum + 2
+		debugPort := "6060"
+		if dp := os.Getenv("DEBUG_PORT"); dp != "" {
+			debugPort = dp
+		}
 		logger.Info("debug.server.starting", lager.Data{"port": debugPort})
-		err := http.ListenAndServe(fmt.Sprintf("localhost:%d", debugPort), nil)
+		err := http.ListenAndServe("localhost:"+debugPort, nil)
 		if err != nil {
 			logger.Error("debug.server.failed", err)
 		}
