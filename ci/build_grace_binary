@@ -18,7 +18,7 @@ pushd $GO_SRC_DIR
   cp Dockerfile $HOME_DIR/grace-docker
 popd
 
-gracesha1sum=$(sha1sum $HOME_DIR/grace-tarball/grace.tar.gz)
+gracesha1sum=$(sha1sum $HOME_DIR/grace-tarball/grace.tar.gz | cut -d' ' -f1)
 
 cat <<HERE > $HOME_DIR/grace-config/grace-config.json
 { "grace_tarball_checksum": "${gracesha1sum}" }
