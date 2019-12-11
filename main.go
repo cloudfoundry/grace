@@ -29,11 +29,11 @@ func main() {
 	var catchTerminate bool
 	var attachToHostname bool
 
-	flag.BoolVar(&chatty, "chatty", false, "make grace chatty")
+	flag.BoolVar(&chatty, "chatty", true, "make grace chatty")
 	flag.StringVar(&upFile, "upFile", "", "a file to write to (lives under /tmp)")
 	flag.DurationVar(&exitAfter, "exitAfter", 0, "if set, grace will exit after this duration")
 	flag.IntVar(&exitAfterCode, "exitAfterCode", 0, "exit code to emit with exitAfter")
-	flag.BoolVar(&catchTerminate, "catchTerminate", false, "make grace catch SIGTERM")
+	flag.BoolVar(&catchTerminate, "catchTerminate", true, "make grace catch SIGTERM")
 	flag.DurationVar(&startAfter, "startAfter", 0, "time to wait before starting")
 	flag.BoolVar(&attachToHostname, "attachToHostname", false, "make grace attach to hostname:port instead of :port")
 
@@ -59,16 +59,29 @@ func main() {
 	}
 
 	if chatty {
-		index, err := helpers.FetchIndex()
+		_, err := helpers.FetchIndex()
 
 		go func() {
 			t := time.NewTicker(time.Second)
+			loop_index := 0
 			for {
 				<-t.C
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "Failed to fetch index: %s\n", err.Error())
 				} else {
-					fmt.Printf("This is Grace on index: %d\n", index)
+					// fmt.Printf("%s This is Grace on index: %d\n", time.Now().Format(time.RFC3339), index)
+					for i := 0; i < 150; i++ {
+						if loop_index >= 2 && loop_index < 5 {
+							time.Sleep(500 * time.Millisecond)
+							continue
+						}
+						if loop_index == 5 {
+							fmt.Printf("index is 5")
+						} else {
+							fmt.Printf("%s This is Grace on index: %d-%d\n", time.Now().Format(time.RFC3339), i, loop_index)
+						}
+					}
+					loop_index++
 				}
 			}
 		}()
@@ -95,14 +108,15 @@ func main() {
 
 	if catchTerminate {
 		go func() {
-			fmt.Println("Will Catch SIGTERM")
+			fmt.Println(time.Now().Format(time.RFC3339), "Will Catch SIGTERM")
 			c := make(chan os.Signal, 1)
 			signal.Notify(c, syscall.SIGTERM)
+			fmt.Println(time.Now().Format(time.RFC3339), "set up SIGTERM handler")
 			<-c
-			t := time.NewTicker(time.Second)
+			fmt.Println(time.Now().Format(time.RFC3339), "caught SIGTERM")
 			for {
-				fmt.Println("Caught SIGTERM")
-				<-t.C
+				fmt.Println(time.Now().Format(time.RFC3339), "still waiting to be killed...")
+				time.Sleep(time.Second)
 			}
 		}()
 	}
