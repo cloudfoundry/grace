@@ -119,7 +119,7 @@ func main() {
 			logger.Fatal("couldn't get hostname", err)
 		}
 		addr = hostname + ":" + port
-		secondary = fmt.Sprintf("%s:%d", hostname, secondaryPort)
+		secondary = fmt.Sprintf("%s:%s", hostname, secondaryPort)
 	}
 	fmt.Printf("Grace is listening on %s\n", addr)
 
