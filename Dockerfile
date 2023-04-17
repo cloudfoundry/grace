@@ -1,4 +1,4 @@
-FROM busybox:ubuntu-14.04
+FROM ubuntu:latest
 
 ENV CUSTOM_GRACE_ENV my-docker-configured-env
 CMD ["-chatty"]
