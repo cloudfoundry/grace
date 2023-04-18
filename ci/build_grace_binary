@@ -8,12 +8,12 @@ mkdir -p $HOME_DIR/$GO_SRC_DIR
 cp -r git-cloudfoundry-grace/* $HOME_DIR/$GO_SRC_DIR
 
 pushd $GO_SRC_DIR
-  GOPATH=$HOME_DIR go build .
+  CGO_ENABLED=0 GOPATH=$HOME_DIR go build .
   tar -czf grace.tar.gz grace
   mv grace.tar.gz $HOME_DIR/grace-tarball
 
   # build grace for the busybox docker image
-  GOPATH=$HOME_DIR go build -tags 'busybox' .
+  CGO_ENABLED=0 GOPATH=$HOME_DIR go build -tags 'busybox' .
   mv grace $HOME_DIR/grace-docker
   cp Dockerfile $HOME_DIR/grace-docker
 popd
