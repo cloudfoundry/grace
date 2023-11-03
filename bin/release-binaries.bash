@@ -33,7 +33,7 @@ cat <<HERE > "${output}/docker/grace-opsfile.yml"
   value: ${sha1sum}
 - type: replace
   path: /instance_groups/name=vizzini/jobs/name=vizzini/properties/vizzini?/grace_busybox_image_url?
-  value: docker:///cloudfoundry/grace#${version}
+  value: docker:///cloudfoundry/grace:${version}
 HERE
 
     GOARCH="${arch}" GOOS="${os}" \
