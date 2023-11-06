@@ -26,13 +26,13 @@ function run() {
 cat <<HERE > "${output}/docker/grace-opsfile.yml"
 ---
 - type: replace
-  path: /instance_groups/name=vizzini/jobs/name=vizzini/properties/vizzini?/grace_tarball_url?
+  path: /instance_groups/name=vizzini/jobs/name=vizzini/properties/grace_tarball_url?
   value: https://storage.googleapis.com/grace-assets/${tarball}
 - type: replace
-  path: /instance_groups/name=vizzini/jobs/name=vizzini/properties/vizzini?/grace_tarball_checksum?
+  path: /instance_groups/name=vizzini/jobs/name=vizzini/properties/grace_tarball_checksum?
   value: ${sha1sum}
 - type: replace
-  path: /instance_groups/name=vizzini/jobs/name=vizzini/properties/vizzini?/grace_busybox_image_url?
+  path: /instance_groups/name=vizzini/jobs/name=vizzini/properties/grace_busybox_image_url?
   value: docker:///cloudfoundry/grace:${version}
 HERE
 
